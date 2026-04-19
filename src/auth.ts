@@ -15,4 +15,11 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: "database",
     },
+
+    callbacks: {
+        async signIn({ user }) {
+            console.log("SIGN IN USER:", user);
+            return true;
+        },
+    },
 };

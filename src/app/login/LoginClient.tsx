@@ -10,7 +10,7 @@ export default function LoginClient(){
 
                 <button 
                     className="border-2 p-2 rounded-lg"
-                    onClick={() => signIn("github")}
+                    onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
                 >
                     Sign in with GitHub
                 </button>

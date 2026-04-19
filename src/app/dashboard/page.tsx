@@ -10,6 +10,8 @@ export default async function Dashboard() {
         redirect("/login");
     }
 
+    console.log("SESSION:", session);
+
     return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="flex flex-col space-y-2">
