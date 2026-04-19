@@ -9,7 +9,7 @@ export default function LoginClient(){
                 <h1 className="text-3xl">Login</h1>
 
                 <button 
-                    className="border border-2 p-2 rounded-lg"
+                    className="border-2 p-2 rounded-lg"
                     onClick={() => signIn("github")}
                 >
                     Sign in with GitHub
