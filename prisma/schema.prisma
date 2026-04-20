@@ -13,13 +13,43 @@ generator client {
 }
 
 model User {
-  id            String @id @default(cuid())
+  id            String  @id @default(cuid())
   name          String?
   email         String? @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  products      UserProduct[]
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  upc       String   @unique
+  title     String?
+  brand     String?
+  category  String?
+  images    String[]
+
+  users UserProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserProduct {
+  id        String   @id @default(cuid())
+
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  product   Product  @relation(fields: [productId], references:[id])
+  productId String
+
+  quantity  Int      @default(1)
+  addedAt   DateTime @default(now())
+
+  @@unique([userId, productId])
 }
 
 model Account {
