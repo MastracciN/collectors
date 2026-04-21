@@ -3,6 +3,7 @@ import { authOptions } from "@/auth"
 import { redirect } from "next/navigation";
 import LogoutButton from "../components/auth/LogoutButton";
 import AddProductButton from "../components/AddProductButton";
+import ListUserProducts from "../components/ListUserProducts";
 
 export default async function Dashboard() {
     const session = await getServerSession(authOptions);
@@ -24,6 +25,7 @@ export default async function Dashboard() {
                     />
                 </div>
                 <AddProductButton />
+                <ListUserProducts />
                 <LogoutButton/>
             </div>
         </div>

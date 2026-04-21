@@ -31,6 +31,8 @@ export default function AddProductButton() {
                 throw new Error(data.error || "Failed");
             }
 
+            window.dispatchEvent(new Event("product-added"));
+
             setMessage("Added");
             setUpc("");
         } catch (err: any){
