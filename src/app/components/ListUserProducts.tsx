@@ -23,9 +23,19 @@ export default function ProductsClient() {
     }, []);
 
     return (
-        <div>
+        <div className="flex flex-col gap-4">
             {userProducts.map((up: any) => (
-                <div key={up.id}>{up.product?.title}</div>
+                <div 
+                    key={up.id}
+                >
+                    {/* <img 
+                        src={up.product?.image?.[0]}
+                        alt={up.product?.title}
+                        className="w-12 h-12 object-contain rounded"    
+                    /> */}
+                    {up.product?.title}
+                    {up.product?.upc}
+                </div>
             ))}
         </div>
     );
