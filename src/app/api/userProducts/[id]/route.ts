@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 
-export async function GET(req: Request, { params }: { params: {id: string}}) {
+export async function GET(req: Request, { params }: { params: { id: string }}) {
     const session = await getServerSession(authOptions);
 
     const id = params.id;
@@ -26,22 +26,34 @@ export async function GET(req: Request, { params }: { params: {id: string}}) {
 
 export async function DELETE (
     req: Request,
-    { params }: { params: {id: string }}
+    { params }: { params: { id: string }}
 ) {
     const session = await getServerSession(authOptions);
 
-    const id = params.id;
+    console.log("SESSION: ", session)
 
-    const result = await prisma.userProduct.delete({
+    if (!session?.user?.id) {
+        return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+
+    const item = await prisma.userProduct.findFirst({
         where: {
             id,
-            userId: session?.user.id,
+            userId: session.user.id,
+        }
+    })
+
+    if (!item) {
+        return Response.json({ error: "Not found or not allowed" }, { status: 404 });
+    }
+
+    await prisma.userProduct.delete({
+        where: {
+            id,
         },
     });
-
-    if (!result) {
-        return Response.json({ error: "Not found" }, { status: 404 });
-    }
 
     return Response.json({ message: "Deleted successfully" });
 }
