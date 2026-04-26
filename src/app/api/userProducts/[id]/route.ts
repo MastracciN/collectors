@@ -5,7 +5,11 @@ import { authOptions } from "@/auth";
 export async function GET(req: Request, { params }: { params: { id: string }}) {
     const session = await getServerSession(authOptions);
 
-    const id = params.id;
+    if (!session?.user?.id) {
+        return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
 
     const product = await prisma.userProduct.findFirst({
         where: {
@@ -29,8 +33,6 @@ export async function DELETE (
     { params }: { params: { id: string }}
 ) {
     const session = await getServerSession(authOptions);
-
-    console.log("SESSION: ", session)
 
     if (!session?.user?.id) {
         return Response.json({ error: "Unauthorized" }, { status: 401 });
