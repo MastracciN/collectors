@@ -24,12 +24,14 @@ model User {
 }
 
 model Product {
-  id        String   @id @default(cuid())
-  upc       String   @unique
+  id        String    @id @default(cuid())
+  upc       String?   @unique
   title     String?
   brand     String?
   category  String?
   images    String[]
+
+  isCustom  Boolean  @default(false)
 
   users UserProduct[]
 

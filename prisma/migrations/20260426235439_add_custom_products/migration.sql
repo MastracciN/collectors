@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Product" ADD COLUMN     "isCustom" BOOLEAN NOT NULL DEFAULT false,
+ALTER COLUMN "upc" DROP NOT NULL;

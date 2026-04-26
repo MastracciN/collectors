@@ -7,54 +7,67 @@ export async function POST(req: Request) {
     try {
         const session = await getServerSession(authOptions);
 
-        if (!session?.user?.email) {
-            return NextResponse.json({ error: "Unauthorized"}, { status: 401 });
+        if (!session?.user?.id){
+            return Response.json({ error: "Unauthorized"}, { status: 401 });
         }
 
-        const { upc } = await req.json();
-
-        if (!upc) {
-            return NextResponse.json({ error: "UPC required" }, { status: 400 });
-        }
-
-        // Find User
         const user = await prisma.user.findUnique({
-            where: { email: session.user.email },
+            where: { id: session.user.id },
         });
 
         if (!user) {
-            return NextResponse.json({ error: "User not found"}, { status: 404 });
+            return Response.json({ error: "User not found"}, { status: 404 });
         }
 
-        // Check if product already exists
-        let product = await prisma.product.findUnique({
-            where: { upc },
-        });
+        const body = await req.json();
+        const { upc, title, brand, category, images = [], quantity = 1 } = body;
 
-        // If not, fetch from UPCitemdb
-        if (!product) {
-            const res = await fetch("https://api.upcitemdb.com/prod/trial/lookup", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ upc }),
+        let product;
+
+        if (upc) {
+            product = await prisma.product.findUnique({
+                where: { upc },
             });
 
-            const data = await res.json();
-            const item = data.items?.[0];
+            if (!product){
+                const res = await fetch("https://api.upcitemdb.com/prod/trial/lookup", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json"},
+                    body: JSON.stringify({ upc }),
+                });
 
-            if (!item) {
-                return NextResponse.json({ error: "Product not found" }, { status: 404 });
+                const data = await res.json();
+                const item = data.items?.[0];
+
+                if (!item) {
+                    return Response.json({ error: "Product not found" }, { status: 404 });
+                }
+
+                product = await prisma.product.create({
+                    data: {
+                        upc: item.upc,
+                        title: item.title,
+                        brand: item.brand,
+                        category: item.category,
+                        images: item.images || [],
+                        isCustom:false,
+                    },
+                });
+            }
+
+        } else {
+            if (!title) {
+                return Response.json({ error: "Title is required for custom product" }, { status: 400 });
             }
 
             product = await prisma.product.create({
                 data: {
-                    upc: item.upc,
-                    title: item.title,
-                    brand: item.brand,
-                    category: item.category,
-                    images: item.images || [],
+                    upc: null,
+                    title,
+                    brand,
+                    category,
+                    images,
+                    isCustom: true,
                 },
             });
         }
@@ -67,19 +80,102 @@ export async function POST(req: Request) {
                 },
             },
             update: {
-                quantity: { increment: 1 },
+                quantity: {
+                    increment: quantity,
+                },
             },
             create: {
                 userId: user.id,
                 productId: product.id,
-                quantity: 1,
+                quantity,
             },
         });
 
-        return NextResponse.json({ success: true, userProduct });
-    } catch (err) {
+        return Response.json({ product, userProduct });
+
+    } catch (err){
         console.error(err);
-        return NextResponse.json({ error: "Server error" }, { status: 500 });
+        return Response.json({ error: "Server error "}, { status: 500 });
     }
 }
+
+// export async function POST(req: Request) {
+//     try {
+//         const session = await getServerSession(authOptions);
+
+//         if (!session?.user?.email) {
+//             return NextResponse.json({ error: "Unauthorized"}, { status: 401 });
+//         }
+
+//         const { upc } = await req.json();
+
+//         if (!upc) {
+//             return NextResponse.json({ error: "UPC required" }, { status: 400 });
+//         }
+
+//         // Find User
+//         const user = await prisma.user.findUnique({
+//             where: { email: session.user.email },
+//         });
+
+//         if (!user) {
+//             return NextResponse.json({ error: "User not found"}, { status: 404 });
+//         }
+
+//         // Check if product already exists
+//         let product = await prisma.product.findUnique({
+//             where: { upc },
+//         });
+
+//         // If not, fetch from UPCitemdb
+//         if (!product) {
+//             const res = await fetch("https://api.upcitemdb.com/prod/trial/lookup", {
+//                 method: "POST",
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                 },
+//                 body: JSON.stringify({ upc }),
+//             });
+
+//             const data = await res.json();
+//             const item = data.items?.[0];
+
+//             if (!item) {
+//                 return NextResponse.json({ error: "Product not found" }, { status: 404 });
+//             }
+
+//             product = await prisma.product.create({
+//                 data: {
+//                     upc: item.upc,
+//                     title: item.title,
+//                     brand: item.brand,
+//                     category: item.category,
+//                     images: item.images || [],
+//                 },
+//             });
+//         }
+
+//         const userProduct = await prisma.userProduct.upsert({
+//             where: {
+//                 userId_productId: {
+//                     userId: user.id,
+//                     productId: product.id,
+//                 },
+//             },
+//             update: {
+//                 quantity: { increment: 1 },
+//             },
+//             create: {
+//                 userId: user.id,
+//                 productId: product.id,
+//                 quantity: 1,
+//             },
+//         });
+
+//         return NextResponse.json({ success: true, userProduct });
+//     } catch (err) {
+//         console.error(err);
+//         return NextResponse.json({ error: "Server error" }, { status: 500 });
+//     }
+// }
 
