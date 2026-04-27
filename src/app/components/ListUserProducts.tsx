@@ -22,6 +22,16 @@ export default function ProductsClient() {
         return () => window.removeEventListener("product-added", handler);
     }, []);
 
+    async function deleteProduct(id: string) {
+        const res = await fetch(`/api/userProducts/${id}`, {
+            method: "DELETE"
+        });
+
+        if (res.ok) {
+            setUserProducts(prev => prev.filter((p: any) => p.id !== id));
+        } 
+    }
+
     return (
         <div className="flex flex-col gap-4">
             {userProducts.map((up: any) => (
@@ -35,6 +45,12 @@ export default function ProductsClient() {
                     /> */}
                     {up.product?.title}
                     {up.product?.upc}
+                    <button 
+                        onClick={() => deleteProduct(up.id)}
+                        className="bg-red-500 text-white px-2 py-1 rounded"
+                    >
+                        Delete
+                    </button>
                 </div>
             ))}
         </div>
