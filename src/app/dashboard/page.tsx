@@ -13,8 +13,8 @@ export default async function Dashboard() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
-            <div className="flex flex-col space-y-2">
+        <div className="flex flex-col p-4">
+            <div className="flex items-center space-x-2 justify-between">
                 <h1>Dashboard</h1>
                 <div className="flex items-center space-x-2">
                     <p>Welcome {session?.user?.name || session?.user?.email}</p>
@@ -24,6 +24,8 @@ export default async function Dashboard() {
                         className="w-12 h-12 rounded-full"
                     />
                 </div>
+            </div>
+            <div className="flex flex-col space-y-2">
                 <AddProductButton />
                 <ListUserProducts />
                 <LogoutButton/>
