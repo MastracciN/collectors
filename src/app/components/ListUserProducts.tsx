@@ -33,26 +33,48 @@ export default function ProductsClient() {
     }
 
     return (
-        <div className="flex flex-col gap-4">
-            {userProducts.map((up: any) => (
-                <div 
-                    key={up.id}
-                >
-                    {/* <img 
-                        src={up.product?.image?.[0]}
-                        alt={up.product?.title}
-                        className="w-12 h-12 object-contain rounded"    
-                    /> */}
-                    {up.product?.title}
-                    {up.product?.upc}
-                    <button 
-                        onClick={() => deleteProduct(up.id)}
-                        className="bg-red-500 text-white px-2 py-1 rounded"
-                    >
-                        Delete
-                    </button>
-                </div>
-            ))}
+        <div className="overflow-x-auto">
+            <table className="min-w-full table-auto text-sm text-left border border-gray-500">
+                <thead className="">
+                    <tr>
+                        <th className="px-4 py-3 border border-gray-500">Title</th>
+                        <th className="px-4 py-3 border border-gray-500">Brand</th>
+                        <th className="px-4 py-3 border border-gray-500">Category</th>
+                        <th className="px-4 py-3 border border-gray-500">Quantity</th>
+                        <th className="px-4 py-3 border border-gray-500">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {userProducts.map((up: any) => (
+                        <tr 
+                            key={up.id}
+                            className="hover:bg-gray-800"
+                        >
+                            <td className="px-4 py-3 border border-gray-500">
+                                {up.product?.title}
+                            </td>
+                            <td className="px-4 py-3 border border-gray-500">
+                                {up.product?.brand}
+                            </td>
+                            <td className="px-4 py-3 border border-gray-500">
+                                {up.product?.category || "N/A"}
+                            </td>
+                            <td className="px-4 py-3 border border-gray-500">
+                                {up.quantity}
+                            </td>
+                            <td className="px-4 py-3 border border-gray-500">
+                                <button 
+                                    onClick={() => deleteProduct(up.id)}
+                                    className="bg-red-500 text-white px-2 py-1 rounded"
+                                >
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }
