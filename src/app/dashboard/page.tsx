@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import LogoutButton from "../components/auth/LogoutButton";
 import AddProductButton from "../components/AddProductButton";
 import ListUserProducts from "../components/ListUserProducts";
+import ProductForm from "../components/ProductForm";
 
 export default async function Dashboard() {
     const session = await getServerSession(authOptions);
@@ -27,6 +28,7 @@ export default async function Dashboard() {
                 </div>
             </div>
             <div className="flex flex-col space-y-2">
+                <ProductForm />
                 <AddProductButton />
                 <ListUserProducts />
                 
