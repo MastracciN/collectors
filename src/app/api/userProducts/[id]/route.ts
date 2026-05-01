@@ -2,7 +2,10 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 
-export async function GET(req: Request, { params }: { params: { id: string }}) {
+export async function GET(
+    req: Request,
+    { params }: { params: Promise<{ id: string }>}
+) {
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -30,7 +33,7 @@ export async function GET(req: Request, { params }: { params: { id: string }}) {
 
 export async function DELETE (
     req: Request,
-    { params }: { params: { id: string }}
+    { params }: { params: Promise<{ id: string }>}
 ) {
     const session = await getServerSession(authOptions);
 
@@ -62,7 +65,7 @@ export async function DELETE (
 
 export async function PATCH (
     req: Request,
-    { params }: { params: { id: string }}
+    { params }: { params: Promise<{ id: string }>}
 ) {
     const session = await getServerSession(authOptions);
 
