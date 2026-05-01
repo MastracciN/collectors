@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export async function middleware(req: any) {
+export async function proxy(req: any) {
     const sessionCookie = req.cookies.get("next-auth.session-token");
 
     const isDashboard = req.nextUrl.pathname.startsWith("/dashboard");
