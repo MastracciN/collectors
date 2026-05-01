@@ -16,6 +16,8 @@ export const authOptions: NextAuthOptions = {
         strategy: "database",
     },
 
+    secret: process.env.NEXTAUTH_SECRET,
+
     callbacks: {
         async signIn({ user }) {
             console.log("SIGN IN USER:", user);
