@@ -44,7 +44,7 @@ export default function AddProductButton() {
     };
 
     return (
-        <div className="flex items-center gap-3 p-4">
+        <div className="flex flex-wrap items-center gap-3 p-4">
             <input
                 type="text"
                 placeholder="Enter UPC"
