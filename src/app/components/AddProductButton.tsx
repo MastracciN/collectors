@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import BarcodeScanner from "./BarcodeScanner";
 
 export default function AddProductButton() {
     const [upc, setUpc] = useState("");
@@ -61,6 +62,8 @@ export default function AddProductButton() {
             </button>
 
             {message && <p className="text-sm">{message}</p>}
+
+            <BarcodeScanner onScan={(code) => setUpc(code)} />
         </div>
     );
 }
