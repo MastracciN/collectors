@@ -6,6 +6,10 @@ import AddProductButton from "../components/AddProductButton";
 import ListUserProducts from "../components/ListUserProducts";
 import ProductForm from "../components/ProductForm";
 
+export const metadata = {
+    title: "Dashboard | Collectors",
+};
+
 export default async function Dashboard() {
     const session = await getServerSession(authOptions);
 
