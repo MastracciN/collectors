@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function ProductForm() {
     const [open, setOpen] = useState(false);
+    const [enabled, setEnabled] = useState(false);
 
     const [formData, setFormData] = useState({
         title: "",
@@ -76,6 +77,8 @@ export default function ProductForm() {
     async function handleSubmit(e: any) {
         e.preventDefault();
         await addProduct();
+        if (!enabled)
+            setOpen(false);
     }
 
     return (
@@ -151,6 +154,21 @@ export default function ProductForm() {
                     />
 
                     <div className="flex space-x-2 py-2">
+
+                    <label className="inline-flex items-center cursor-pointer">
+                        <input 
+                            type="checkbox" 
+                            checked={enabled} 
+                            className="sr-only peer" 
+                            onChange={(e) => {
+                                setEnabled(e.target.checked);
+                                console.log(e.target.checked);
+                            }}
+                        />
+                        <div className="relative w-9 h-5 bg-neutral-quaternary peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-soft dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"></div>
+                        <span className="select-none ms-3 text-sm font-medium text-heading">Create More</span>
+                    </label>
+
                         <button 
                             type="submit"
                             disabled={loading}
