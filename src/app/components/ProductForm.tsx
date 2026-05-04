@@ -99,7 +99,7 @@ export default function ProductForm() {
             </div>
 
             <div
-                className={`fixed right-0 top-0 z-50 flex h-full w-full max-w-lg transform 
+                className={`fixed right-0 top-0 z-50 flex h-full w-full md:max-w-5/6 lg:max-w-4/6 xl:max-w-2/6 transform 
                     flex-col bg-[#1f1f1f] shadow-2xl transition-transform duration-300
                 ${ open 
                     ? "translate-x-0" 
@@ -113,6 +113,7 @@ export default function ProductForm() {
                     onSubmit={handleSubmit}
                     className="space-y-4 p-4 flex flex-col"
                 >
+                    <label>Title</label>
                     <input
                         type="text"
                         name="title"
