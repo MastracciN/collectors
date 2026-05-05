@@ -2,7 +2,7 @@
 
 import { doesNotMatch } from "assert";
 import { Html5QrcodeScanner } from "html5-qrcode";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type Props = {
     onScan: (code: string) => void;
@@ -15,6 +15,8 @@ export default function BarcodeScanner() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [lastScanned, setLastScanned] = useState("");
+
+    const lastScannedRef = useRef("");
 
     const addProduct = async (upc: string) => {
         if (!upc) {
@@ -70,9 +72,9 @@ export default function BarcodeScanner() {
         scanner.render(
             async (decodedText) => {
 
-                if (decodedText === lastScanned) return;
+                if (decodedText === lastScannedRef.current) return;
 
-                setLastScanned(decodedText);
+                lastScannedRef.current = decodedText;
 
                 await addProduct(decodedText);
 
