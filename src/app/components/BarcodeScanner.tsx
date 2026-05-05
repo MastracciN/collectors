@@ -14,6 +14,7 @@ export default function BarcodeScanner() {
 
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const [scanning, setScanning] = useState(false);
 
     const addProduct = async (upc: string) => {
         if (!upc) {
@@ -69,9 +70,17 @@ export default function BarcodeScanner() {
         scanner.render(
             async (decodedText) => {
 
+                if (scanning) return;
+
+                setScanning(true);
+
                 await addProduct(decodedText);
 
-                scanner.clear().catch(console.error);
+                setTimeout(() => {
+                    setScanning(false);
+                }, 2000);
+
+                // scanner.clear().catch(console.error);
             },
             (error) => {
                 console.log(error);
