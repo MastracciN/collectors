@@ -12,12 +12,11 @@ type Props = {
 
 export default function BarcodeScanner() {
 
-    const [upc, setUpc] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
-    const addProduct = async (barcode: string) => {
-        if (!barcode) {
+    const addProduct = async (upc: string) => {
+        if (!upc) {
             setMessage("Scan a barcode");
             return;
         }
@@ -31,7 +30,7 @@ export default function BarcodeScanner() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ upc }),
+                body: JSON.stringify({ upc: upc }),
             });
 
             const data = await res.json();
@@ -43,7 +42,6 @@ export default function BarcodeScanner() {
             window.dispatchEvent(new Event("product-added"));
 
             setMessage("Added");
-            setUpc("");
         } catch (err: any){
             setMessage(`${err.message}`);
         } finally {
@@ -70,9 +68,6 @@ export default function BarcodeScanner() {
 
         scanner.render(
             async (decodedText) => {
-                setUpc(decodedText);
-
-                // onScan(decodedText);
 
                 await addProduct(decodedText);
 
@@ -86,12 +81,12 @@ export default function BarcodeScanner() {
         return () => {
             scanner.clear().catch(console.error);
         };
-    // }, [onScan]);
-    });
+    }, []);
 
     return (
         <div className="w-full">
             <div id="reader" />
+            {message && <p>{message}</p>}
         </div>
     );
 
