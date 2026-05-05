@@ -63,7 +63,7 @@ export default function AddProductButton() {
 
             {message && <p className="text-sm">{message}</p>}
 
-            <BarcodeScanner onScan={(code) => setUpc(code)} />
+            {/* <BarcodeScanner onScan={(code) => setUpc(code)} /> */}
         </div>
     );
 }

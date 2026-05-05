@@ -5,6 +5,7 @@ import LogoutButton from "../components/auth/LogoutButton";
 import AddProductButton from "../components/AddProductButton";
 import ListUserProducts from "../components/ListUserProducts";
 import ProductForm from "../components/ProductForm";
+import BarcodeScanner from "../components/BarcodeScanner";
 
 export const metadata = {
     title: "Dashboard | Collectors",
@@ -34,6 +35,7 @@ export default async function Dashboard() {
             <div className="flex flex-col space-y-2">
                 <ProductForm />
                 <AddProductButton />
+                <BarcodeScanner />
                 <ListUserProducts />
                 
             </div>
