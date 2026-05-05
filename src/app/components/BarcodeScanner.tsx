@@ -14,7 +14,7 @@ export default function BarcodeScanner() {
 
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
-    const [scanning, setScanning] = useState(false);
+    const [lastScanned, setLastScanned] = useState("");
 
     const addProduct = async (upc: string) => {
         if (!upc) {
@@ -70,17 +70,12 @@ export default function BarcodeScanner() {
         scanner.render(
             async (decodedText) => {
 
-                if (scanning) return;
+                if (decodedText === lastScanned) return;
 
-                setScanning(true);
+                setLastScanned(decodedText);
 
                 await addProduct(decodedText);
 
-                setTimeout(() => {
-                    setScanning(false);
-                }, 2000);
-
-                // scanner.clear().catch(console.error);
             },
             (error) => {
                 console.log(error);
