@@ -15,8 +15,10 @@ export default function BarcodeScanner() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [lastScanned, setLastScanned] = useState("");
+    const [scannerOpen, setScannerOpen] = useState(false);
 
     const lastScannedRef = useRef("");
+    const scannerRef = useRef<Html5QrcodeScanner | null>(null);
 
     const addProduct = async (upc: string) => {
         if (!upc) {
@@ -53,6 +55,9 @@ export default function BarcodeScanner() {
     };
 
     useEffect(() => {
+
+        if (!scannerOpen) return;
+
         const scanner = new Html5QrcodeScanner(
             "reader",
             {
@@ -68,6 +73,8 @@ export default function BarcodeScanner() {
             },
             false
         );
+
+        scannerRef.current = scanner;
 
         scanner.render(
             async (decodedText) => {
@@ -87,14 +94,47 @@ export default function BarcodeScanner() {
         return () => {
             scanner.clear().catch(console.error);
         };
-    }, []);
+    }, [scannerOpen]);
+
+    const closeScanner = async () => {
+        setScannerOpen(false);
+
+        if (scannerRef.current) {
+            await scannerRef.current.clear().catch(console.error);
+            scannerRef.current = null;
+        }
+    };
 
     return (
-        <div className="w-full">
-            <div id="reader" />
-            {message && <p>{message}</p>}
+        <div>
+            <button
+                onClick={() => setScannerOpen(true)}
+                className="px-4 py-2 rounded bg-blue-600 text-white"
+            >
+                Scan Barcode
+            </button>
+
+            {scannerOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+                    <div className="bg-black p-8 rounded-xl w-full max-w-lg relative">
+                        <button
+                            onClick={closeScanner}
+                            className="absolute top-2 right-2 text-xl"
+                        >
+                            X
+                        </button>
+
+                        <div id="reader" />
+
+                        {message && (
+                            <p className="mt-4 text-center">
+                                {message}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
-
 }
 
