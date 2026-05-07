@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import AddProductButton from "./AddProductButton";
 
 export default function ProductForm() {
     const [open, setOpen] = useState(false);
@@ -85,7 +86,7 @@ export default function ProductForm() {
         <div>
             <button
                 onClick={() => setOpen(true)}
-                className="bg-green-600 p-2 rounded-lg"
+                className="bg-green-600 p-2 rounded"
             >
                 Add Item Manually
             </button>
@@ -109,8 +110,15 @@ export default function ProductForm() {
                     : "translate-x-full"
                 }`}
             >
+                <div className="p-4 pt-8 text-4xl border-b border-[#4d4d4d]">Add Items</div>
                 <div className="p-4 text-2xl">
-                    Add Item
+                    Add Item via UPC
+                </div>
+                <div className="border-b border-[#4d4d4d] pb-4">
+                    <AddProductButton />
+                </div>
+                <div className="p-4 text-2xl">
+                    Add Manually
                 </div>
                 <form
                     onSubmit={handleSubmit}

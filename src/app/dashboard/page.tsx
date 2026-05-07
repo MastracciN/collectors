@@ -33,9 +33,11 @@ export default async function Dashboard() {
                 </div>
             </div>
             <div className="flex flex-col space-y-2">
-                <ProductForm />
-                <AddProductButton />
-                <BarcodeScanner />
+                <div className="flex space-x-2 p-4">
+                    <BarcodeScanner />
+                    <ProductForm />
+                </div>
+
                 <ListUserProducts />
                 
             </div>
