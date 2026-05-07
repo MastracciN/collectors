@@ -116,15 +116,18 @@ export default function BarcodeScanner() {
 
             {scannerOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-                    <div className="bg-black p-8 rounded-xl w-full max-w-lg relative">
+                    <div className="bg-black p-8 rounded-xl w-full max-w-3xl h-[90vh] relative overflow-hidden">
                         <button
                             onClick={closeScanner}
-                            className="absolute top-2 right-2 text-xl"
+                            className="absolute top-3 right-3 z-10 text-2xl"
                         >
                             X
                         </button>
 
-                        <div id="reader" />
+                        <div className="w-full h-full p-4">
+                            <div id="reader" className="w-full h-full"/>
+                        </div>
+
 
                         {message && (
                             <p className="mt-4 text-center">
