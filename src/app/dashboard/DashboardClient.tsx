@@ -8,6 +8,8 @@ import ProductForm from "../components/ProductForm";
 
 export default function DashboardClient({ session }: any) {
 
+    const [open, setOpen] = useState(false);
+
     return (
         <div className="min-h-screen text-white flex flex-col bg-[#1f1f1f]">
             <div className="flex items-center space-x-2 justify-between p-4 border-b-2 border-[#4d4d4d]">
@@ -18,8 +20,15 @@ export default function DashboardClient({ session }: any) {
                         src={session?.user?.image ?? "images/avatar-placeholder.png"} 
                         alt="profile" 
                         className="w-12 h-12 rounded-full"
+                        onClick={() => setOpen(!open)}
                     />
-                    <LogoutButton/>
+
+                    {open && (
+                        <div className="absolute right-0 top-14 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg w-40">
+                            <LogoutButton/>
+                        </div>
+                    )}
+
                 </div>
             </div>
             <div className="flex flex-col space-y-2">
