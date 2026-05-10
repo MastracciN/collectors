@@ -108,20 +108,20 @@ export default function BarcodeScanner() {
     };
 
     return (
-        <div>
+        <div className="font-sans">
             <button
                 onClick={() => setScannerOpen(true)}
-                className="px-4 py-2 rounded bg-blue-600 text-white"
+                className="px-4 py-2 rounded bg-[#4148ad] hover:bg-[#333888] transition-all duration-150 shadow-md hover:shadow-lg cursor-pointer"
             >
                 Scan Barcode
             </button>
 
             {scannerOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-                    <div className="bg-black rounded-xl w-full max-w-3xl h-screen md:h-[90vh] relative overflow-hidden">
+                    <div className="bg-black w-full max-w-3xl h-screen md:h-[90vh] relative overflow-hidden">
                         <button
                             onClick={closeScanner}
-                            className="absolute top-3 right-3 z-10 text-2xl"
+                            className="absolute top-6 right-6 z-10 text-2xl cursor-pointer hover:opacity-50"
                         >
                             X
                         </button>
