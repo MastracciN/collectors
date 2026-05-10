@@ -58,10 +58,10 @@ export default function ProductsClient() {
     }
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto font-sans">
             <table className="min-w-full table-auto text-sm text-left border border-gray-500">
                 <thead className="">
-                    <tr>
+                    <tr className="bg-[#303030]">
                         <th className="px-4 py-3 border border-gray-500">Title</th>
                         <th className="px-4 py-3 border border-gray-500">Brand</th>
                         {/* <th className="px-4 py-3 border border-gray-500">Category</th> */}
@@ -75,7 +75,7 @@ export default function ProductsClient() {
                     {userProducts.map((up: any) => (
                         <tr 
                             key={up.id}
-                            className="hover:bg-gray-800"
+                            className="hover:bg-[#303030]"
                         >
                             <td className="px-4 py-3 border border-gray-500">
                                 {up.product?.title}
