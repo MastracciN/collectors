@@ -11,20 +11,20 @@ export default function DashboardClient({ session }: any) {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="min-h-screen text-white flex flex-col bg-[#1f1f1f]">
+        <div className="min-h-screen text-white flex flex-col bg-[#1f1f1f] font-sans">
             <div className="flex items-center space-x-2 justify-between p-4 border-b-2 border-[#4d4d4d]">
-                <h1>Dashboard</h1>
+                <h1 className="text-xl">Dashboard</h1>
                 <div className="flex items-center space-x-2">
-                    <p>Welcome {session?.user?.name || session?.user?.email}</p>
+                    <p>{session?.user?.name || session?.user?.email}</p>
                     <img 
                         src={session?.user?.image ?? "images/avatar-placeholder.png"} 
                         alt="profile" 
-                        className="w-12 h-12 rounded-full"
+                        className="w-12 h-12 rounded-full cursor-pointer"
                         onClick={() => setOpen(!open)}
                     />
 
                     {open && (
-                        <div className="absolute right-0 top-14 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg w-40">
+                        <div className="absolute right-5 top-14 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg w-50">
                             <LogoutButton/>
                         </div>
                     )}
