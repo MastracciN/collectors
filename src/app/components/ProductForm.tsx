@@ -83,10 +83,10 @@ export default function ProductForm() {
     }
 
     return (
-        <div>
+        <div className="font-sans">
             <button
                 onClick={() => setOpen(true)}
-                className="bg-green-600 p-2 rounded"
+                className="bg-[#498350] p-2 rounded hover:bg-[#3b6841] transition-all duration-150 shadow-md hover:shadow-lg cursor-pointer"
             >
                 Add Item Manually
             </button>
@@ -184,13 +184,13 @@ export default function ProductForm() {
                         <button 
                             type="submit"
                             disabled={loading}
-                            className="flex-1 rounded-lg py-2 text-white bg-green-500"
+                            className="flex-1 py-2 text-white bg-[#498350] p-2 rounded hover:bg-[#3b6841] transition-all duration-150 shadow-md hover:shadow-lg cursor-pointer"
                         >
                             {loading ? "Adding..." : "Add New Item"}
                         </button>
 
                         <button
-                            className="flex-1 bg-red-600 rounded-lg"
+                            className="flex-1 bg-[#7c2727] p-2 rounded hover:bg-[#581c1c] transition-all duration-150 shadow-md hover:shadow-lg cursor-pointer"
                             onClick={() => setOpen(false)}
                         >
                             Cancel
