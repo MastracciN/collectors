@@ -4,11 +4,19 @@ import { useEffect, useState } from "react";
 
 export default function ProductsClient() {
     const [userProducts, setUserProducts] = useState([]);
+    const [valuations, setValuations] = useState<Record<string, any>>({});
 
     async function loadProducts() {
         const res = await fetch("/api/userProducts");
         const data = await res.json();
         setUserProducts(data);
+
+        data.forEach((p: any) => {
+            const name = p.product?.title;
+            if (name) {
+                fetchValuation(name, p.id);
+            }
+        });
     }
 
     useEffect(() => {
@@ -32,6 +40,23 @@ export default function ProductsClient() {
         } 
     }
 
+    async function fetchValuation(name: string, id: string) {
+        try {
+            const res = await fetch(
+                `/api/ebay/sold-price?q=${encodeURIComponent(name)}`
+            );
+
+            const data = await res.json();
+
+            setValuations((prev) => ({
+                ...prev,
+                [id]: data.result,
+            }));
+        } catch (err) {
+            console.error("valuation error", err);
+        }
+    }
+
     return (
         <div className="overflow-x-auto">
             <table className="min-w-full table-auto text-sm text-left border border-gray-500">
@@ -39,8 +64,9 @@ export default function ProductsClient() {
                     <tr>
                         <th className="px-4 py-3 border border-gray-500">Title</th>
                         <th className="px-4 py-3 border border-gray-500">Brand</th>
-                        <th className="px-4 py-3 border border-gray-500">Category</th>
+                        {/* <th className="px-4 py-3 border border-gray-500">Category</th> */}
                         <th className="px-4 py-3 border border-gray-500">Quantity</th>
+                        <th className="px-4 py-3 border border-gray-500">Estimated Value</th>
                         <th className="px-4 py-3 border border-gray-500">Actions</th>
                     </tr>
                 </thead>
@@ -57,11 +83,16 @@ export default function ProductsClient() {
                             <td className="px-4 py-3 border border-gray-500">
                                 {up.product?.brand}
                             </td>
-                            <td className="px-4 py-3 border border-gray-500">
+                            {/* <td className="px-4 py-3 border border-gray-500">
                                 {up.product?.category || "N/A"}
-                            </td>
+                            </td> */}
                             <td className="px-4 py-3 border border-gray-500">
                                 {up.quantity}
+                            </td>
+                            <td className="px-4 py-3 border border-gray-500">
+                                {valuations[up.id]?.average
+                                    ? `$${valuations[up.id].average}`
+                                    : "-"}
                             </td>
                             <td className="px-4 py-3 border border-gray-500">
                                 <button 
