@@ -56,7 +56,7 @@ export default function AddProductButton() {
             <button
                 onClick={addProduct}
                 disabled={loading}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+                className="px-4 py-2 bg-[#498350] rounded hover:bg-[#3b6841] transition-all duration-150 shadow-md hover:shadow-lg cursor-pointer disabled:opacity-50"
             >
                 {loading ? "Adding..." : "Add"}
             </button>
