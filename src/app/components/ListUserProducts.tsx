@@ -97,7 +97,7 @@ export default function ProductsClient() {
                             <td className="px-4 py-3 border border-gray-500">
                                 <button 
                                     onClick={() => deleteProduct(up.id)}
-                                    className="bg-red-500 text-white px-2 py-1 rounded"
+                                    className="px-3 py-1 rounded bg-[#9e0303] hover:opacity-75 transition-all duration-150 shadow-md hover:shadow-lg cursor-pointer"
                                 >
                                     Delete
                                 </button>
