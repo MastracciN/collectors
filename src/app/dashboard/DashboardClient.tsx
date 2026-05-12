@@ -16,18 +16,20 @@ export default function DashboardClient({ session }: any) {
                 <h1 className="text-xl">Dashboard</h1>
                 <div className="flex items-center space-x-2">
                     <p>{session?.user?.name || session?.user?.email}</p>
-                    <img 
-                        src={session?.user?.image ?? "images/avatar-placeholder.png"} 
-                        alt="profile" 
-                        className="w-12 h-12 rounded-full cursor-pointer"
-                        onClick={() => setOpen(!open)}
-                    />
+                    <div className="relative">
+                        <img 
+                            src={session?.user?.image ?? "images/avatar-placeholder.png"} 
+                            alt="profile" 
+                            className="w-12 h-12 rounded-full cursor-pointer"
+                            onClick={() => setOpen(!open)}
+                        />
 
-                    {open && (
-                        <div className="absolute right-5 top-14 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg w-50">
-                            <LogoutButton/>
-                        </div>
-                    )}
+                        {open && (
+                            <div className="absolute right-1 top-14 bg-[#2a2a2a] border border-gray-600 rounded-lg shadow-lg w-50">
+                                <LogoutButton/>
+                            </div>
+                        )}
+                    </div>
 
                 </div>
             </div>
