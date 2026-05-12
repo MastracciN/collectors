@@ -1,10 +1,19 @@
 "use client";
 
+import { UserProduct } from "@prisma/client";
 import { useEffect, useState } from "react";
+import { Search } from "lucide-react";
 
 export default function ProductsClient() {
-    const [userProducts, setUserProducts] = useState([]);
+    const [userProducts, setUserProducts] = useState<UserProduct[]>([]);
     const [valuations, setValuations] = useState<Record<string, any>>({});
+    const [search, setSearch] = useState("");
+
+    const filteredProducts = userProducts.filter((up: any) =>
+        up.product?.title.toLowerCase().includes(search.toLowerCase()) ||
+        up.product?.brand.toLowerCase().includes(search.toLowerCase()) ||
+        String(up.quantity).includes(search)
+    );
 
     async function loadProducts() {
         const res = await fetch("/api/userProducts");
@@ -59,6 +68,18 @@ export default function ProductsClient() {
 
     return (
         <div className="overflow-x-auto font-sans">
+
+            <div className="relative w-full">
+                <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2"/>
+                <input 
+                    type="text" 
+                    placeholder="Search products" 
+                    value={search} 
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-gray-500 focus:outline-none"
+                />
+
+            </div>
             <table className="min-w-full table-auto text-sm text-left border border-gray-500">
                 <thead className="">
                     <tr className="bg-[#303030]">
@@ -72,7 +93,7 @@ export default function ProductsClient() {
                 </thead>
 
                 <tbody>
-                    {userProducts.map((up: any) => (
+                    {filteredProducts.map((up: any) => (
                         <tr 
                             key={up.id}
                             className="hover:bg-[#303030]"
