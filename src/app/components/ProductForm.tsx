@@ -6,7 +6,6 @@ import AddProductButton from "./AddProductButton";
 export default function ProductForm() {
     const [open, setOpen] = useState(false);
     const [enabled, setEnabled] = useState(false);
-    const [prodInfoOpen, setProdInfoOpen] = useState(false);
 
     const [formData, setFormData] = useState({
         title: "",

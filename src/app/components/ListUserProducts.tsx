@@ -3,11 +3,15 @@
 import { UserProduct } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
+import ProductInfo from "./ProductInfo";
 
 export default function ProductsClient() {
     const [userProducts, setUserProducts] = useState<UserProduct[]>([]);
     const [valuations, setValuations] = useState<Record<string, any>>({});
     const [search, setSearch] = useState("");
+
+    const [prodInfoOpen, setProdInfoOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
     const filteredProducts = userProducts.filter((up: any) =>
         up.product?.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -66,6 +70,11 @@ export default function ProductsClient() {
         }
     }
 
+    function displayProductInfo(up: any) {
+        setSelectedProduct(up);
+        setProdInfoOpen(true);
+    }
+
     return (
         <div className="overflow-x-auto font-sans">
 
@@ -98,7 +107,10 @@ export default function ProductsClient() {
                             key={up.id}
                             className="hover:bg-[#303030]"
                         >
-                            <td className="px-4 py-3 border border-gray-500">
+                            <td 
+                                className="px-4 py-3 border border-gray-500 cursor-pointer hover:underline"
+                                onClick={() => displayProductInfo(up)}
+                            >
                                 {up.product?.title}
                             </td>
                             <td className="px-4 py-3 border border-gray-500">
@@ -127,6 +139,14 @@ export default function ProductsClient() {
                     ))}
                 </tbody>
             </table>
+
+            {selectedProduct && (
+                <ProductInfo
+                    userProduct={selectedProduct}
+                    open={prodInfoOpen}
+                    onClose={() => setProdInfoOpen(false)}
+                />
+            )}
         </div>
     );
 }
