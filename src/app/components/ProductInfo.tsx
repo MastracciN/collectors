@@ -26,7 +26,15 @@ export default function ProductInfo({ userProduct , open, onClose}: { userProduc
                     : "translate-x-full"
                 }`}
             >
-                <div className="p-4 pt-8 text-4xl border-b border-[#4d4d4d]">Product Info</div>
+                <div className='relative'>
+                    <div className="p-4 pt-8 text-4xl border-b border-[#4d4d4d]">Product Info</div>
+                    <div
+                        className='absolute top-10 right-5 text-2xl cursor-pointer hover:opacity-75'
+                        onClick={onClose}
+                    >
+                        X
+                    </div>
+                </div>
                 <div className='p-4 grid grid-cols-[100px_1fr] gap-y-3 gap-x-4'>
                     <p>Title</p>
                     <p>{userProduct.product?.title}</p>
