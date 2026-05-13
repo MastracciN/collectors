@@ -8,7 +8,6 @@ type SideMenuProps = {
 }
 
 export default function ProductInfo({ userProduct , open, onClose}: { userProduct: any} & SideMenuProps) {
-    // const [open, setOpen] = useState(false);
 
     return (
         <>
@@ -28,6 +27,22 @@ export default function ProductInfo({ userProduct , open, onClose}: { userProduc
                 }`}
             >
                 <div className="p-4 pt-8 text-4xl border-b border-[#4d4d4d]">Product Info</div>
+                <div className='p-4 grid grid-cols-[100px_1fr] gap-y-3 gap-x-4'>
+                    <p>Title</p>
+                    <p>{userProduct.product?.title}</p>
+
+                    <p>UPC</p>
+                    <p>{userProduct.product?.upc}</p>
+
+                    <p>Brand</p>
+                    <p>{userProduct.product?.brand}</p>
+
+                    <p>Category</p>
+                    <p>{userProduct.product?.category}</p>
+
+                    <p>Quantity</p>
+                    <p>{userProduct.quantity}</p>
+                </div>
             </div>
         </>
     )
