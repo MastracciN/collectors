@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect } from "react";
 
 type SideMenuProps = {
     open: boolean;
@@ -8,6 +9,18 @@ type SideMenuProps = {
 }
 
 export default function ProductInfo({ userProduct , open, onClose}: { userProduct: any} & SideMenuProps) {
+
+    useEffect(() => {
+        if (open) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+        }, [open]);
 
     return (
         <>
@@ -19,7 +32,7 @@ export default function ProductInfo({ userProduct , open, onClose}: { userProduc
             )}
 
             <div
-                className={`fixed right-0 top-0 z-50 flex h-full w-full md:max-w-5/6 lg:max-w-4/6 xl:max-w-2/6 transform 
+                className={`fixed right-0 top-0 z-50 flex h-full w-full overflow-y-auto md:max-w-5/6 lg:max-w-4/6 xl:max-w-2/6 transform 
                     flex-col bg-[#1f1f1f] shadow-2xl transition-transform duration-300
                 ${ open 
                     ? "translate-x-0" 
@@ -52,8 +65,6 @@ export default function ProductInfo({ userProduct , open, onClose}: { userProduc
                         e.currentTarget.src="images/avatar-placeholder.png";
                     }}
                 />
-
-
 
                 <div className='p-4 grid grid-cols-[100px_1fr] gap-y-3 gap-x-4'>
                     <p>Title</p>
