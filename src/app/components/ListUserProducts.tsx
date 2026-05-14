@@ -143,6 +143,7 @@ export default function ProductsClient() {
             {selectedProduct && (
                 <ProductInfo
                     userProduct={selectedProduct}
+                    valuation={valuations[selectedProduct.id]}
                     open={prodInfoOpen}
                     onClose={() => setProdInfoOpen(false)}
                 />

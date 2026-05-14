@@ -8,7 +8,7 @@ type SideMenuProps = {
     onClose: () => void;
 }
 
-export default function ProductInfo({ userProduct , open, onClose}: { userProduct: any} & SideMenuProps) {
+export default function ProductInfo({ userProduct , valuation, open, onClose}: { userProduct: any} & { valuation: any} & SideMenuProps) {
 
     useEffect(() => {
         if (open) {
@@ -66,7 +66,7 @@ export default function ProductInfo({ userProduct , open, onClose}: { userProduc
                     }}
                 />
 
-                <div className='p-4 grid grid-cols-[100px_1fr] gap-y-3 gap-x-4'>
+                <div className='p-4 grid grid-cols-[100px_1fr] gap-y-3 gap-x-4 border-b border-b-gray-500'>
                     <p>Title</p>
                     <p>{userProduct.product?.title}</p>
 
@@ -82,6 +82,37 @@ export default function ProductInfo({ userProduct , open, onClose}: { userProduc
                     <p>Quantity</p>
                     <p>{userProduct.quantity}</p>
                 </div>
+
+                <div className="p-4 text-2xl">eBay Listing Stats</div>
+                <div className="p-4 grid grid-cols-[250px_1fr] gap-y-3 gap-x-4 border-b-gray-500">
+                    <p>Number of listings</p>
+                    <p>{valuation?.sampleSize != null
+                        ? `$${valuation.sampleSize}`
+                        : "N/A"}
+                    </p>
+
+                    <p>eBay Average Listing Price</p>
+                    <p>{valuation?.average != null
+                        ? `$${valuation.average}`
+                        : "N/A"}
+                    </p>
+
+                    <p>eBay Minimum Listing Price</p>
+                    <p>{valuation?.min != null
+                        ? `$${valuation.min}`
+                        : "N/A"}
+                    </p>
+
+                    <p>eBay Maximum Listing Price</p>
+                    <p>{valuation?.max != null
+                        ? `$${valuation.max}`
+                        : "N/A"}
+                    </p>
+
+                    
+                </div>
+
+
             </div>
         </>
     )
