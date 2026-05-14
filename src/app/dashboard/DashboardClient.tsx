@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import LogoutButton from "../components/auth/LogoutButton";
 import BarcodeScanner from "../components/BarcodeScanner";
 import ListUserProducts from "../components/ListUserProducts";
@@ -9,6 +9,21 @@ import ProductForm from "../components/ProductForm";
 export default function DashboardClient({ session }: any) {
 
     const [open, setOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <div className="min-h-screen text-white flex flex-col bg-[#1f1f1f] font-sans">
@@ -16,7 +31,7 @@ export default function DashboardClient({ session }: any) {
                 <h1 className="text-xl">Dashboard</h1>
                 <div className="flex items-center space-x-2">
                     <p>{session?.user?.name || session?.user?.email}</p>
-                    <div className="relative">
+                    <div className="relative" ref={menuRef}>
                         <img 
                             src={session?.user?.image ?? "images/avatar-placeholder.png"} 
                             alt="profile" 
