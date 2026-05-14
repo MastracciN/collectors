@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import Image from "next/image";
 
 type SideMenuProps = {
     open: boolean;
@@ -35,6 +35,26 @@ export default function ProductInfo({ userProduct , open, onClose}: { userProduc
                         X
                     </div>
                 </div>
+
+                {/* <Image
+                    src={userProduct.product.images?.[0] ?? "/images/avatar-placeholder.png"}
+                    alt={userProduct.product?.title ?? "Product image"}
+                    width={450}
+                    height={450}
+                /> */}
+                <img 
+                    src={userProduct.product.images?.[0] ?? "/images/avatar-placeholder.png"}
+                    width={450}
+                    height={450}
+                    className="mx-auto"
+                    alt={userProduct.product?.title ?? "Product image"}
+                    onError={(e) => {
+                        e.currentTarget.src="images/avatar-placeholder.png";
+                    }}
+                />
+
+
+
                 <div className='p-4 grid grid-cols-[100px_1fr] gap-y-3 gap-x-4'>
                     <p>Title</p>
                     <p>{userProduct.product?.title}</p>
