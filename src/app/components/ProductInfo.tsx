@@ -87,7 +87,7 @@ export default function ProductInfo({ userProduct , valuation, open, onClose}: {
                 <div className="p-4 grid grid-cols-[250px_1fr] gap-y-3 gap-x-4 border-b-gray-500">
                     <p>Number of listings</p>
                     <p>{valuation?.sampleSize != null
-                        ? `$${valuation.sampleSize}`
+                        ? `${valuation.sampleSize}`
                         : "N/A"}
                     </p>
 
