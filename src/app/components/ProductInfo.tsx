@@ -91,24 +91,23 @@ export default function ProductInfo({ userProduct , valuation, open, onClose}: {
                         : "N/A"}
                     </p>
 
-                    <p>eBay Average Listing Price</p>
+                    <p>Average Listing Price</p>
                     <p>{valuation?.average != null
                         ? `$${valuation.average}`
                         : "N/A"}
                     </p>
 
-                    <p>eBay Minimum Listing Price</p>
+                    <p>Minimum Listing Price</p>
                     <p>{valuation?.min != null
                         ? `$${valuation.min}`
                         : "N/A"}
                     </p>
 
-                    <p>eBay Maximum Listing Price</p>
+                    <p>Maximum Listing Price</p>
                     <p>{valuation?.max != null
                         ? `$${valuation.max}`
                         : "N/A"}
                     </p>
-
                     
                 </div>
 
