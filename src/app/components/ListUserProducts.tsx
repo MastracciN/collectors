@@ -80,11 +80,13 @@ export default function ProductsClient() {
 
             <div className="relative w-full">
                 <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2"/>
-                <X 
-                    size={18} 
-                    className="absolute right-3 top-1/2 -translate-y-1/2 hover:opacity-75 cursor-pointer"
-                    onClick={() => setSearch("")}
-                />
+                {search && (
+                    <X 
+                        size={18} 
+                        className="absolute right-3 top-1/2 -translate-y-1/2 hover:opacity-75 cursor-pointer"
+                        onClick={() => setSearch("")}
+                    />
+                )}
                 <input 
                     type="text" 
                     placeholder="Search products..." 
