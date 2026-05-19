@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type SideMenuProps = {
     open: boolean;
@@ -9,6 +9,28 @@ type SideMenuProps = {
 }
 
 export default function ProductInfo({ userProduct , valuation, open, onClose}: { userProduct: any} & { valuation: any} & SideMenuProps) {
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    function nextImage() {
+        setCurrentIndex((prev) => {
+            if (prev >= userProduct.product.images?.length - 1) {
+                return 0;
+            }
+
+            return prev + 1;
+        });
+    }
+
+    function previousImage() {
+        setCurrentIndex((prev) => {
+            if (prev <= 0) {
+                return userProduct.product.images?.length - 1;
+            }
+
+            return prev - 1;
+        });
+    }
 
     useEffect(() => {
         if (open) {
